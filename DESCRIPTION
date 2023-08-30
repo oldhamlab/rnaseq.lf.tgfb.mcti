@@ -11,7 +11,7 @@ Description: This package is a data repository for RNA-seq data obtained to
     inhibitor VB124 (10 μM), separately or together, with DMSO (0.1%) as the 
     vehicle control. RNA was obtained after 48 h of treatment and submitted for 
     sequencing. 
-License: MIT + file LICENSE
+License: CC0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
