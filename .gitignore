@@ -4,3 +4,8 @@
 .httr-oauth
 .DS_Store
 .quarto
+.snakemake
+*.gz
+index
+quants
+decoys.txt
