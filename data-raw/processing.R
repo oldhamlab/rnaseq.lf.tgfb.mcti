@@ -5,6 +5,7 @@
 
 library(org.Hs.eg.db)
 
+
 # samples -----------------------------------------------------------------
 
 replicate <- rep(1:4, each = 8)
@@ -23,14 +24,12 @@ samples <-
     condition = factor(
       condition,
       levels = c("Ctl", "TGFb"),
-      labels = c("Ctl", "TGFβ"),
-      ordered = TRUE
+      labels = c("Ctl", "TGFβ")
     ),
     treatment = factor(
       treatment,
       levels = c("DMSO", "AZD", "VB", "Dual"),
-      labels = c("Veh", "AZD", "VB", "AZD/VB"),
-      ordered = TRUE
+      labels = c("Veh", "AZD", "VB", "AZD/VB")
     )
   )
 
