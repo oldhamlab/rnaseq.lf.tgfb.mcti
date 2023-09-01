@@ -1,6 +1,10 @@
 # processing.R
 
 
+# setup -------------------------------------------------------------------
+
+library(org.Hs.eg.db)
+
 # samples -----------------------------------------------------------------
 
 replicate <- rep(1:4, each = 8)
@@ -33,7 +37,7 @@ samples <-
 
 # merge -------------------------------------------------------------------
 
-files <-
+fasta_files <-
   list.files(
     path = "/Volumes/LaCie/rnaseq/rnaseq_lf_tgfb_mcti_BGI_2022/",
     pattern = "*.fq.gz",
@@ -57,10 +61,41 @@ fasta_c <- function(files, sample) {
 }
 
 dir.create("data-raw/merge")
-purrr::walk(samples$id, \(x) fasta_c(files, x))
+purrr::walk(samples$id, \(x) fasta_c(fasta_files, x))
 
 
 # salmon ------------------------------------------------------------------
 
 system("snakemake --use-conda -c 1")
 
+
+# annotate ----------------------------------------------------------------
+
+quant_files <-
+  list.files(
+    "data-raw/quants",
+    "quant.sf",
+    full.names = TRUE,
+    recursive = TRUE
+  )
+
+coldata <-
+  tibble::tibble(files = quant_files) |>
+  dplyr::mutate(
+    names = stringr::str_extract(.data$files, "(?<=quants/).*(?=/quant.sf)")
+  ) |>
+  dplyr::left_join(samples, by = c("names" = "id"))
+
+se <-
+  tximeta::tximeta(coldata) |>
+  tximeta::summarizeToGene() |>
+  tximeta::addIds("ENTREZID", gene = TRUE, multiVals = "first") |>
+  tximeta::addIds("SYMBOL", gene = TRUE, multiVals = "first")
+
+names(SummarizedExperiment::rowData(se)) <-
+  tolower(names(SummarizedExperiment::rowData(se)))
+
+
+# save --------------------------------------------------------------------
+
+usethis::use_data(se, overwrite = TRUE, compress = "xz", version = 3)
