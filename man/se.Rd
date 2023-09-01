@@ -19,9 +19,9 @@ and submitted for sequencing by BGI Genomics. The samples were analyzed using
 their DNBSEQ platform with 100 bp paired-end sequencing with greater than 20
 M clean reads per sample. All samples passed quality control and mapping
 checks. Reads were aligned to transcript sequences from GENCODE release 44
-\code{salmon}. Processing details are outlined in the \code{data-raw} folder of the
-package source. The cleaned sequences are available from the NIH short read
-archive (SRA) as project number ###.
+using \code{salmon}. Processing details are outlined in the \code{data-raw} folder of
+the package source. The cleaned sequences are available from the NIH short
+read archive (SRA) as project number PRJNA1011992.
 }
 \details{
 Phenotype data can be accessed with \code{colData(se)}:

@@ -10,9 +10,9 @@
 #' their DNBSEQ platform with 100 bp paired-end sequencing with greater than 20
 #' M clean reads per sample. All samples passed quality control and mapping
 #' checks. Reads were aligned to transcript sequences from GENCODE release 44
-#' `salmon`. Processing details are outlined in the `data-raw` folder of the
-#' package source. The cleaned sequences are available from the NIH short read
-#' archive (SRA) as project number ###.
+#' using `salmon`. Processing details are outlined in the `data-raw` folder of
+#' the package source. The cleaned sequences are available from the NIH short
+#' read archive (SRA) as project number PRJNA1011992.
 #'
 #' Phenotype data can be accessed with `colData(se)`:
 #'
