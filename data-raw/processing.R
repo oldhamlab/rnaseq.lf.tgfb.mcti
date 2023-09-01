@@ -21,6 +21,7 @@ samples <-
     treatment = treatment
   ) |>
   dplyr::mutate(
+    replicate = factor(replicate),
     condition = factor(
       condition,
       levels = c("Ctl", "TGFb"),
