@@ -26,10 +26,12 @@ rule genome:
         "release_44/GRCh38.primary_assembly.genome.fa.gz -P data-raw/"
 
 rule decoys:
+    input:
+        genome = "data-raw/GRCh38.primary_assembly.genome.fa.gz"
     output:
         "data-raw/decoys.txt"
     shell:
-        "grep '^>' <(gunzip -c data-raw/GRCh38.primary_assembly.genome.fa.gz) |"
+        "grep '^>' <(gunzip -c {input.genome}) |"
         "cut -d ' ' -f 1 > data-raw/decoys.txt"
 
 rule combined:
