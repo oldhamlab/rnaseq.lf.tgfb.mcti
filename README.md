@@ -16,7 +16,7 @@ You can install this package from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("wmoldham/rnaseq.lf.tgfb.mcti")
+remotes::install_github("oldhamlab/rnaseq.lf.tgfb.mcti")
 ```
 
 ## Experiment
