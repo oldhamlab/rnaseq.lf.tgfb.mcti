@@ -21,3 +21,5 @@ LazyData: true
 LazyDataCompression: xz
 Imports: 
     SummarizedExperiment
+URL: https://github.com/oldhamlab/rnaseq.lf.tgfb.mcti
+BugReports: https://github.com/oldhamlab/rnaseq.lf.tgfb.mcti/issues
