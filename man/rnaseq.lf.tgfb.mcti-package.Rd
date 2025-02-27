@@ -8,6 +8,14 @@
 \description{
 This package is a data repository for RNA-seq data obtained to study the impact of lactate transport inhibition on myofibroblast differentiation. Normal lung fibroblasts (Lonza) were treated with TGFβ (2 ng/mL) in combination with MCT1 inhibitor AZD3965 (100 nM) or MCT4 inhibitor VB124 (10 μM), separately or together, with DMSO (0.1%) as the vehicle control. RNA was obtained after 48 h of treatment and submitted for sequencing.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/oldhamlab/rnaseq.lf.tgfb.mcti}
+  \item Report bugs at \url{https://github.com/oldhamlab/rnaseq.lf.tgfb.mcti/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: William Oldham \email{wm.oldham@gmail.com} (\href{https://orcid.org/0000-0003-3029-4866}{ORCID})
 

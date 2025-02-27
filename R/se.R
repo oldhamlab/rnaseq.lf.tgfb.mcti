@@ -2,7 +2,7 @@
 
 #' Summarized RNA-seq Data
 #'
-#' RNA was harvested from lung fibroblasts were serum starved for 24 h prior to
+#' RNA was harvested from lung fibroblasts serum starved for 24 h prior to
 #' treatment with TGFβ (2 ng/mL) in combination with MCT1 inhibitor AZD3965
 #' (100 nM), MCT4 inhibitor VB124 (10 μM), or both. DMSO (0.1%) was the vehicle
 #' control. After 48 h of treatment, RNA was extracted using Qiagen RNeasy kit

@@ -4,62 +4,65 @@
 
 conda: "data-raw/mapping.yaml"
 
-SALMON = "/usr/local/anaconda3/envs/salmon/bin/salmon"
-RUNS, = glob_wildcards("data-raw/merge/{run}_1.fq.gz")
+# SALMON = "/usr/local/anaconda3/envs/salmon/bin/salmon"
+RUNS, = glob_wildcards("/Users/will/Desktop/rnaseq_lf_tgfb_mcti_BGI_2025/{run}/{run}_1.fq.gz")
 
 rule all:
     input:
-        expand("data-raw/quants/{run}/quant.sf", run = RUNS)
+        expand("/Users/will/Desktop/rnaseq_lf_tgfb_mcti_BGI_2025/quants/{run}/quant.sf", run = RUNS)
 
 rule transcriptome:
     output:
-        "data-raw/gencode.v44.transcripts.fa.gz"
+        "/Users/will/Desktop/index/gencode.v47.transcripts.fa.gz"
     shell:
         "wget ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/"
-        "release_44/gencode.v44.transcripts.fa.gz -P data-raw/"
+        "release_47/gencode.v47.transcripts.fa.gz -P /Users/will/Desktop/index"
 
 rule genome:
     output:
-        "data-raw/GRCh38.primary_assembly.genome.fa.gz"
+        "/Users/will/Desktop/index/GRCh38.primary_assembly.genome.fa.gz"
     shell:
         "wget ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/"
-        "release_44/GRCh38.primary_assembly.genome.fa.gz -P data-raw/"
+        "release_47/GRCh38.primary_assembly.genome.fa.gz -P /Users/will/Desktop/index"
 
 rule decoys:
     input:
-        genome = "data-raw/GRCh38.primary_assembly.genome.fa.gz"
+        genome = "/Users/will/Desktop/index/GRCh38.primary_assembly.genome.fa.gz"
     output:
-        "data-raw/decoys.txt"
-    shell:
-        "grep '^>' <(gunzip -c {input.genome}) |"
-        "cut -d ' ' -f 1 > data-raw/decoys.txt"
+        "/Users/will/Desktop/index/decoys.txt"
+    run:
+        shell("grep '^>' <(gunzip -c {input.genome}) |"
+        "cut -d ' ' -f 1 > /Users/will/Desktop/index/decoys.txt")
+        shell("sed -i.bak -e 's/>//g' /Users/will/Desktop/index/decoys.txt")
 
 rule combined:
+    input:
+        transcripts = "/Users/will/Desktop/index/gencode.v47.transcripts.fa.gz",
+        genome = "/Users/will/Desktop/index/GRCh38.primary_assembly.genome.fa.gz"
     output:
-        "data-raw/gentrome.fa.gz"
+        "/Users/will/Desktop/index/gentrome.fa.gz"
     shell:
-        "cat data-raw/gencode.v44.transcripts.fa.gz "
-        "data-raw/GRCh38.primary_assembly.genome.fa.gz > "
-        "data-raw/gentrome.fa.gz"
+        "cat {input.transcripts} {input.genome} > "
+        "/Users/will/Desktop/index/gentrome.fa.gz"
 
 rule index:
     input:
-        seq = "data-raw/gentrome.fa.gz",
-        decoy = "data-raw/decoys.txt"
+        seq = "/Users/will/Desktop/index/gentrome.fa.gz",
+        decoy = "/Users/will/Desktop/index/decoys.txt"
     output:
-        directory("data-raw/index")
+        directory("/Users/will/Desktop/index/index")
     shell:
-        "{SALMON} index --gencode -p 7 -t {input.seq} -d {input.decoy} -i {output}"
+        "salmon index --gencode -p 7 -t {input.seq} -d {input.decoy} -i {output}"
 
 rule quant:
     input:
-        r1 = "data-raw/merge/{sample}_1.fq.gz",
-        r2 = "data-raw/merge/{sample}_2.fq.gz",
-        index = "data-raw/index"
+        r1 = "/Users/will/Desktop/rnaseq_lf_tgfb_mcti_BGI_2025/{sample}/{sample}_1.fq.gz",
+        r2 = "/Users/will/Desktop/rnaseq_lf_tgfb_mcti_BGI_2025/{sample}/{sample}_2.fq.gz",
+        index = "/Users/will/Desktop/index/index"
     output:
-        "data-raw/quants/{sample}/quant.sf"
+        "/Users/will/Desktop/rnaseq_lf_tgfb_mcti_BGI_2025/quants/{sample}/quant.sf"
     params:
-        dir = "data-raw/quants/{sample}"
+        dir = "/Users/will/Desktop/rnaseq_lf_tgfb_mcti_BGI_2025/quants/{sample}"
     shell:
-        "{SALMON} quant -i {input.index} -l A -p 7 --gcBias -o {params.dir}"
+        "salmon quant -i {input.index} -l A -p 7 --gcBias -o {params.dir}"
         " -1 {input.r1} -2 {input.r2}"
